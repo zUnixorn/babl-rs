@@ -10,24 +10,34 @@ bitflags! {
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     #[doc(alias = "BablModelFlag")]
     pub struct ModelFlag: u32 {
+        /// the model encodes alpha.
         #[doc(alias = "BABL_MODEL_FLAG_ALPHA")]
         const ALPHA = ffi::BABL_MODEL_FLAG_ALPHA as _;
+        /// the alpha is associated alpha.
         #[doc(alias = "BABL_MODEL_FLAG_ASSOCIATED")]
         const ASSOCIATED = ffi::BABL_MODEL_FLAG_ASSOCIATED as _;
+        /// the components are inverted (used for getting the additive complement space of CMYK).
         #[doc(alias = "BABL_MODEL_FLAG_INVERTED")]
         const INVERTED = ffi::BABL_MODEL_FLAG_INVERTED as _;
+        /// the data has no TRC, i.e. is linear
         #[doc(alias = "BABL_MODEL_FLAG_LINEAR")]
         const LINEAR = ffi::BABL_MODEL_FLAG_LINEAR as _;
+        /// the data has a TRC - the TRC from the configured space
         #[doc(alias = "BABL_MODEL_FLAG_NONLINEAR")]
         const NONLINEAR = ffi::BABL_MODEL_FLAG_NONLINEAR as _;
+        /// the data has a TRC - a perceptual TRC where 50% gray is 0.5
         #[doc(alias = "BABL_MODEL_FLAG_PERCEPTUAL")]
         const PERCEPTUAL = ffi::BABL_MODEL_FLAG_PERCEPTUAL as _;
+        /// this is a gray component model
         #[doc(alias = "BABL_MODEL_FLAG_GRAY")]
         const GRAY = ffi::BABL_MODEL_FLAG_GRAY as _;
+        /// this is an RGB based component model, the space associated is expected to contain an RGB matrix profile.
         #[doc(alias = "BABL_MODEL_FLAG_RGB")]
         const RGB = ffi::BABL_MODEL_FLAG_RGB as _;
+        /// this model is part of the CIE family of spaces
         #[doc(alias = "BABL_MODEL_FLAG_CIE")]
         const CIE = ffi::BABL_MODEL_FLAG_CIE as _;
+        /// the encodings described are CMYK encodings, the space associated is expected to contain an CMYK ICC profile.
         #[doc(alias = "BABL_MODEL_FLAG_CMYK")]
         const CMYK = ffi::BABL_MODEL_FLAG_CMYK as _;
     }

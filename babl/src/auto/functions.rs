@@ -7,6 +7,8 @@ use crate::{ffi,ModelFlag,Object,SpaceFlags};
 use glib::{translate::*};
 
 
+/// Returns the babl object representing the color component given by
+/// `name` such as for example "R", "cyan" or "CIE L".
 #[doc(alias = "babl_component")]
 pub fn component(name: &str) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -20,6 +22,7 @@ pub fn component(name: &str) -> Option<Object> {
 //    unsafe { TODO: call ffi:babl_component_new() }
 //}
 
+/// Returns the RGB space defined for the destination of conversion.
 #[doc(alias = "babl_conversion_get_destination_space")]
 pub fn conversion_get_destination_space(conversion: &Object) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -28,6 +31,7 @@ pub fn conversion_get_destination_space(conversion: &Object) -> Option<Object> {
     }
 }
 
+/// Returns the RGB space defined for the source of conversion.
 #[doc(alias = "babl_conversion_get_source_space")]
 pub fn conversion_get_source_space(conversion: &Object) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -41,6 +45,8 @@ pub fn conversion_get_source_space(conversion: &Object) -> Option<Object> {
 //    unsafe { TODO: call ffi:babl_conversion_new() }
 //}
 
+/// Deinitializes the babl library and frees any resources used when
+/// matched with the number of calls to [`init()`][crate::init()].
 #[doc(alias = "babl_exit")]
 pub fn exit() {
     assert_initialized_main_thread!();
@@ -64,6 +70,10 @@ pub fn exit() {
 //    unsafe { TODO: call ffi:babl_fish_get_process() }
 //}
 
+/// Returns the babl object representing the color format given by
+/// `name` such as for example "RGB u8", "CMYK float" or "CIE Lab u16",
+/// creates a format using the sRGB space, to also specify the color space
+/// and TRCs for a format, see babl_format_with_space.
 #[doc(alias = "babl_format")]
 pub fn format(encoding: &str) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -72,6 +82,9 @@ pub fn format(encoding: &str) -> Option<Object> {
     }
 }
 
+/// Returns 1 if the provided format name is known by babl or 0 if it is
+/// not. Can also be used to verify that specific extension formats are
+/// available (though this can also be inferred from the version of babl).
 #[doc(alias = "babl_format_exists")]
 pub fn format_exists(name: &str) -> i32 {
     assert_initialized_main_thread!();
@@ -80,6 +93,7 @@ pub fn format_exists(name: &str) -> i32 {
     }
 }
 
+/// Returns the bytes per pixel for a babl color format.
 #[doc(alias = "babl_format_get_bytes_per_pixel")]
 pub fn format_get_bytes_per_pixel(format: &Object) -> i32 {
     assert_initialized_main_thread!();
@@ -88,6 +102,7 @@ pub fn format_get_bytes_per_pixel(format: &Object) -> i32 {
     }
 }
 
+/// Returns the components and data type, without space suffix.
 #[doc(alias = "babl_format_get_encoding")]
 pub fn format_get_encoding(babl: &Object) -> Option<glib::GString> {
     assert_initialized_main_thread!();
@@ -96,6 +111,7 @@ pub fn format_get_encoding(babl: &Object) -> Option<glib::GString> {
     }
 }
 
+/// Return the model used for constructing the format.
 #[doc(alias = "babl_format_get_model")]
 pub fn format_get_model(format: &Object) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -104,6 +120,7 @@ pub fn format_get_model(format: &Object) -> Option<Object> {
     }
 }
 
+/// Returns the number of components for the given `format`.
 #[doc(alias = "babl_format_get_n_components")]
 pub fn format_get_n_components(format: &Object) -> i32 {
     assert_initialized_main_thread!();
@@ -120,6 +137,8 @@ pub fn format_get_space(format: &Object) -> Option<Object> {
     }
 }
 
+/// Returns the type in the given `format` for the given
+/// `component_index`.
 #[doc(alias = "babl_format_get_type")]
 pub fn format_get_type(format: &Object, component_index: i32) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -128,6 +147,7 @@ pub fn format_get_type(format: &Object, component_index: i32) -> Option<Object> 
     }
 }
 
+/// Returns whether the `format` has an alpha channel.
 #[doc(alias = "babl_format_has_alpha")]
 pub fn format_has_alpha(format: &Object) -> i32 {
     assert_initialized_main_thread!();
@@ -136,6 +156,7 @@ pub fn format_has_alpha(format: &Object) -> i32 {
     }
 }
 
+/// Returns whether the `format` is a format_n type.
 #[doc(alias = "babl_format_is_format_n")]
 pub fn format_is_format_n(format: &Object) -> i32 {
     assert_initialized_main_thread!();
@@ -144,6 +165,7 @@ pub fn format_is_format_n(format: &Object) -> i32 {
     }
 }
 
+/// check whether a format is a palette backed format.
 #[doc(alias = "babl_format_is_palette")]
 pub fn format_is_palette(format: &Object) -> i32 {
     assert_initialized_main_thread!();
@@ -165,6 +187,12 @@ pub fn format_n(type_: &Object, components: i32) -> Option<Object> {
 //    unsafe { TODO: call ffi:babl_format_new() }
 //}
 
+/// Returns the babl object representing the color format given by
+/// `name` such as for example "RGB u8", "R'G'B'A float", "Y float" with
+/// a specific RGB working space used as the space, the resulting format
+/// has -space suffixed to it, unless the space requested is sRGB then
+/// the unsuffixed version is used. If a format is passed in as space
+/// the space of the format is used.
 #[doc(alias = "babl_format_with_space")]
 pub fn format_with_space(encoding: &str, space: &Object) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -182,6 +210,7 @@ pub fn model_flags(model: &Object) -> ModelFlag {
     }
 }
 
+/// Returns a string describing a Babl object.
 #[doc(alias = "babl_get_name")]
 #[doc(alias = "get_name")]
 pub fn name(babl: &Object) -> Option<glib::GString> {
@@ -197,6 +226,19 @@ pub fn name(babl: &Object) -> Option<glib::GString> {
 //    unsafe { TODO: call ffi:babl_get_user_data() }
 //}
 
+/// Get the version information on the babl library
+///
+/// # Returns
+///
+///
+/// ## `major`
+/// The major version number
+///
+/// ## `minor`
+/// The minor version number
+///
+/// ## `micro`
+/// The micro version number
 #[doc(alias = "babl_get_version")]
 #[doc(alias = "get_version")]
 pub fn version() -> (i32, i32, i32) {
@@ -219,6 +261,7 @@ pub fn icc_get_key(icc_data: &str, key: &str, language: &str, country: &str) -> 
     }
 }
 
+/// Initializes the babl library.
 #[doc(alias = "babl_init")]
 pub fn init() {
     assert_initialized_main_thread!();
@@ -227,6 +270,9 @@ pub fn init() {
     }
 }
 
+/// introspect a given BablObject
+/// ## `babl`
+/// A `Babl`
 #[doc(alias = "babl_introspect")]
 pub fn introspect(babl: &mut Object) {
     assert_initialized_main_thread!();
@@ -235,6 +281,8 @@ pub fn introspect(babl: &mut Object) {
     }
 }
 
+/// Returns the babl object representing the color model given by `name`
+/// such as for example "RGB", "CMYK" or "CIE Lab".
 #[doc(alias = "babl_model")]
 pub fn model(name: &str) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -243,6 +291,11 @@ pub fn model(name: &str) -> Option<Object> {
     }
 }
 
+///
+/// # Returns
+///
+/// 0 if the name of the model in babl does not correspond to the
+/// provided model name.
 #[doc(alias = "babl_model_is")]
 pub fn model_is(babl: &Object, model_name: &str) -> i32 {
     assert_initialized_main_thread!();
@@ -256,6 +309,8 @@ pub fn model_is(babl: &Object, model_name: &str) -> i32 {
 //    unsafe { TODO: call ffi:babl_model_new() }
 //}
 
+/// The models for formats also have a space in babl, try to avoid code
+/// needing to use this.
 #[doc(alias = "babl_model_with_space")]
 pub fn model_with_space(name: &str, space: &Object) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -264,6 +319,8 @@ pub fn model_with_space(name: &str, space: &Object) -> Option<Object> {
     }
 }
 
+/// reset a palette to initial state, frees up some caches that optimize
+/// conversions.
 #[doc(alias = "babl_palette_reset")]
 pub fn palette_reset(babl: &Object) {
     assert_initialized_main_thread!();
@@ -287,6 +344,9 @@ pub fn palette_reset(babl: &Object) {
 //    unsafe { TODO: call ffi:babl_process_rows() }
 //}
 
+/// Returns the babl object representing the `horizontal` and `vertical`
+/// sampling such as for example 2, 2 for the chroma components in
+/// YCbCr.
 #[doc(alias = "babl_sampling")]
 pub fn sampling(horizontal: i32, vertical: i32) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -300,6 +360,9 @@ pub fn sampling(horizontal: i32, vertical: i32) -> Option<Object> {
 //    unsafe { TODO: call ffi:babl_set_user_data() }
 //}
 
+/// Returns the babl object representing the specific RGB matrix color
+/// working space referred to by name. Babl knows of:
+///  sRGB, Rec2020, Adobish, Apple and ProPhoto
 #[doc(alias = "babl_space")]
 pub fn space(name: &str) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -308,6 +371,41 @@ pub fn space(name: &str) -> Option<Object> {
     }
 }
 
+/// Creates a new babl-space/ RGB matrix color space definition with the
+/// specified CIE xy(Y) values for white point: wx, wy and primary
+/// chromaticities: rx,ry,gx,gy,bx,by and TRCs to be used. After registering a
+/// new babl-space it can be used with [`space()`][crate::space()] passing its name;
+///
+/// Internally this does the math to derive the RGBXYZ matrix as used in an ICC
+/// profile.
+/// ## `name`
+/// The name for the color space
+/// ## `wx`
+/// The X-coordinate of the color space's white point
+/// ## `wy`
+/// The Y-coordinate of the color space's white point
+/// ## `rx`
+/// The X-coordinate of the red primary
+/// ## `ry`
+/// The Y-coordinate of the red primary
+/// ## `gx`
+/// The X-coordinate of the green primary
+/// ## `gy`
+/// The Y-coordinate of the green primary
+/// ## `bx`
+/// The X-coordinate of the blue primary
+/// ## `by`
+/// The Y-coordinate of the blue primary
+/// ## `trc_red`
+/// The red component of the TRC.
+/// ## `trc_green`
+/// The green component of the TRC (can be [`None`] if it's
+///  the same as `trc_red`).
+/// ## `trc_blue`
+/// The blue component of the TRC (can be [`None`] if it's
+///  the same as `trc_red`).
+/// ## `flags`
+/// The [`SpaceFlags`][crate::SpaceFlags]
 #[doc(alias = "babl_space_from_chromaticities")]
 pub fn space_from_chromaticities(name: Option<&str>, wx: f64, wy: f64, rx: f64, ry: f64, gx: f64, gy: f64, bx: f64, by: f64, trc_red: &Object, trc_green: Option<&Object>, trc_blue: Option<&Object>, flags: SpaceFlags) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -316,6 +414,43 @@ pub fn space_from_chromaticities(name: Option<&str>, wx: f64, wy: f64, rx: f64, 
     }
 }
 
+/// Creates a new RGB matrix color space definition using a precomputed D50
+/// adapted 3x3 matrix and associated CIE XYZ whitepoint, as possibly read from
+/// an ICC profile.
+/// ## `name`
+/// The name for the color space
+/// ## `wx`
+/// The X-coordinate of the color space's white point
+/// ## `wy`
+/// The Y-coordinate of the color space's white point
+/// ## `wz`
+/// The Z-coordinate of the color space's white point
+/// ## `rx`
+/// The X-coordinate of the red primary
+/// ## `gx`
+/// The X-coordinate of the green primary
+/// ## `bx`
+/// The X-coordinate of the blue primary
+/// ## `ry`
+/// The Y-coordinate of the red primary
+/// ## `gy`
+/// The Y-coordinate of the green primary
+/// ## `by`
+/// The Y-coordinate of the blue primary
+/// ## `rz`
+/// The Z-coordinate of the red primary
+/// ## `gz`
+/// The Z-coordinate of the green primary
+/// ## `bz`
+/// The Z-coordinate of the blue primary
+/// ## `trc_red`
+/// The red component of the TRC.
+/// ## `trc_green`
+/// The green component of the TRC (can be [`None`] if it's
+///  the same as `trc_red`).
+/// ## `trc_blue`
+/// The blue component of the TRC (can be [`None`] if it's
+///  the same as `trc_red`).
 #[doc(alias = "babl_space_from_rgbxyz_matrix")]
 pub fn space_from_rgbxyz_matrix(name: Option<&str>, wx: f64, wy: f64, wz: f64, rx: f64, gx: f64, bx: f64, ry: f64, gy: f64, by: f64, rz: f64, gz: f64, bz: f64, trc_red: &Object, trc_green: Option<&Object>, trc_blue: Option<&Object>) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -332,6 +467,19 @@ pub fn space_get_gamma(space: &Object) -> f64 {
     }
 }
 
+/// Return pointer to ICC profile for space note that this is
+/// the ICC profile for R'G'B', though in formats only supporting linear
+/// like EXR GEGL chooses to load this lienar data as RGB and use the sRGB
+/// TRC.
+/// ## `babl`
+/// a `Babl`
+///
+/// # Returns
+///
+/// pointer to ICC profile data.
+///
+/// ## `length`
+/// Length of the profile in bytes.
 #[doc(alias = "babl_space_get_icc")]
 pub fn space_get_icc(babl: &Object) -> (glib::GString, i32) {
     assert_initialized_main_thread!();
@@ -342,6 +490,21 @@ pub fn space_get_icc(babl: &Object) -> (glib::GString, i32) {
     }
 }
 
+/// Retrieve the relevant RGB luminance constants for a babl space.
+/// ## `space`
+/// a BablSpace
+///
+/// # Returns
+///
+///
+/// ## `red_luminance`
+/// Location for the red luminance factor.
+///
+/// ## `green_luminance`
+/// Location for the green luminance factor.
+///
+/// ## `blue_luminance`
+/// Location for the blue luminance factor.
 #[doc(alias = "babl_space_get_rgb_luminance")]
 pub fn space_get_rgb_luminance(space: &Object) -> (f64, f64, f64) {
     assert_initialized_main_thread!();
@@ -370,6 +533,7 @@ pub fn space_is_gray(space: &Object) -> i32 {
     }
 }
 
+/// Creates a variant of an existing space with different trc.
 #[doc(alias = "babl_space_with_trc")]
 pub fn space_with_trc(space: &Object, trc: &Object) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -378,6 +542,8 @@ pub fn space_with_trc(space: &Object, trc: &Object) -> Option<Object> {
     }
 }
 
+/// Look up a TRC by name, "sRGB" and "linear" are recognized
+/// strings in a stock babl configuration.
 #[doc(alias = "babl_trc")]
 pub fn trc(name: &str) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -386,6 +552,8 @@ pub fn trc(name: &str) -> Option<Object> {
     }
 }
 
+/// Creates a Babl TRC for a specific gamma value, it will be given
+/// a name that is a short string representation of the value.
 #[doc(alias = "babl_trc_gamma")]
 pub fn trc_gamma(gamma: f64) -> Option<Object> {
     assert_initialized_main_thread!();
@@ -394,6 +562,8 @@ pub fn trc_gamma(gamma: f64) -> Option<Object> {
     }
 }
 
+/// Returns the babl object representing the data type given by `name`
+/// such as for example "u8", "u16" or "float".
 #[doc(alias = "babl_type")]
 #[doc(alias = "type")]
 pub fn type_(name: &str) -> Option<Object> {
