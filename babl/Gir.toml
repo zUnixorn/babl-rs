@@ -1,0 +1,41 @@
+[options]
+library = "Babl"
+version = "0.1"
+min_cfg_version = "0.1"
+target_path = "."
+girs_directories = ["../gir-files", "../"]
+work_mode = "normal"
+single_version_file = true
+generate_safety_asserts = true
+deprecate_by_min_version = true
+
+generate = [
+	"Babl.Object",
+	"Babl.FishProcess",
+	"Babl.FuncLinear",
+	"Babl.FuncPlanar",
+	"Babl.IccIntent",
+	"Babl.ModelFlag",
+	"Babl.SpaceFlags",
+]
+
+manual = []
+
+[[object]]
+name = "Babl.*"
+status = "generate"
+	[[object.function]]
+	name = "space_get"
+	ignore = true
+	[[object.function]]
+	name = "space_from_icc"
+	ignore = true
+	[[object.function]]
+	name = "icc_make_space"
+	ignore = true
+	[[object.function]]
+	name = "new_palette"
+	ignore = true
+	[[object.function]]
+	name = "new_palette_with_space"
+	ignore = true

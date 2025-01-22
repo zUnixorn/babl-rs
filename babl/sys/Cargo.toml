@@ -1,0 +1,29 @@
+[package]
+name = "babl-sys"
+version = "0.0.1"
+edition = "2021"
+build = "build.rs"
+
+[package.metadata.system-deps]
+
+[package.metadata.docs.rs]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
+all-features = true
+
+[lib]
+name = "babl_sys"
+
+[dependencies]
+libc = "0.2"
+glib-sys = "0.20.7"
+gobject-sys = "0.20.7"
+
+[build-dependencies]
+system-deps = "7"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]
